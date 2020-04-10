@@ -74,10 +74,38 @@ void Cf734_D2_A(){
             cout << "Anton" << endl;
         else cout << "Danik" << endl;
     }
+}
 
+void Cf791_D2_A(){
+    int a,b; cin >> a >> b;
+    int ans=0;
+    while(a <= b){
+        a = 3*a;
+        b = 2*b;
+        ans++;
+    }
+    cout << ans << endl;
+}
+
+void CF231_D2_A(){
+    int n; cin >> n;
+    int a[n][3];
+    int ans=0;
+    int c=0;
+    rep(i , 0 , n){
+        c=0;
+        rep(j , 0 , 3){
+            cin >> a[i][j];
+            if(a[i][j]==1)
+                c++;
+        }
+        if(c>=2)
+            ans++;
+    }
+    cout << ans << endl;
 }
 
 int32_t main(){
     __;
-    	
+    
 }
