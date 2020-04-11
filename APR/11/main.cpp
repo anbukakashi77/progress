@@ -52,6 +52,7 @@ bool func(string s1 , string s2){
 void spoj_SBSTR1(){
     int t = 24; cin >> t;
     while(t--){
+        string s1,s2; cin >> s1 >> s2;
         if(func(s1,s2))
             cout << 1 << endl;
         else cout << 0 << endl;
