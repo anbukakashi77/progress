@@ -41,6 +41,39 @@ void file(){
     #endif
 }
 
+const int N = 10001;
+int arr[N];
+int st[4*N];
+
+void Build_max(int si , int ss , int se){
+    if(ss==se){
+        st[si] = arr[ss];
+        return;
+    }
+
+    int mid = (ss+se)/2;
+
+    Build_max(2*si+1 , ss , mid);
+    Build_max(2*si + 2 , mid+1 , se);
+
+    st[si] = max(st[2*si+1] , st[2*si+2]);
+}
+
+int rmq(int si , int ss , int se , int qs , int qe){
+    if(qs > se || qe < ss)      //completely outside
+        return INT_MIN;
+
+    if(ss >= qs && se <= qe)    //completely inside
+        return st[si];
+
+    int mid = (ss+se)/2;
+    int l = rmq(2*si+1, ss , mid , qs , qe);
+    int r = rmq(2*si+2 , mid+1 , se , qs , qe);
+
+    return max(l,r);
+}
+
+
 bool func(string s1 , string s2){
     int l1=10; int l2=5;
     rep(i , 0 , l1-l2){
@@ -144,9 +177,24 @@ void CF344_D2_A(){
     cout << c << endl;
 }
 
-
+void CF381_D2_A(){
+    //ans[2] --global array init to 0;
+    int n; cin >> n;
+    rep(i , 0 , n){
+        cin >> a[i];
+    }	
+    int k=1;
+    for(int i=0, j=n-1 ; i<=j ; ){
+        k^=1;
+        if(a[i]>a[j])
+            ans[k]+=a[i++];
+        else ans[k]+=a[j--];
+    }
+    cout << ans[0] << " " << ans[1] << endl;
+}
 
 int32_t main(){
-    __;	
-   
+    __;
+    
+    return 0;
 }
