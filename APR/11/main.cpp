@@ -178,7 +178,7 @@ void CF344_D2_A(){
 }
 
 void CF381_D2_A(){
-    //ans[2] --global array init to 0;
+/*    //ans[2] --global array init to 0;
     int n; cin >> n;
     rep(i , 0 , n){
         cin >> a[i];
@@ -190,7 +190,7 @@ void CF381_D2_A(){
             ans[k]+=a[i++];
         else ans[k]+=a[j--];
     }
-    cout << ans[0] << " " << ans[1] << endl;
+    cout << ans[0] << " " << ans[1] << endl;*/
 }
 
 int32_t main(){
