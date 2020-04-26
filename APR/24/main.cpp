@@ -20,8 +20,8 @@ if(neg){x *= -1;}}
 #define pii             				pair<int,int>
 #define vi              				vector<int>
 #define mii             				map<int,int>
-#define pqb             				priority_queue<int>
-#define pqs             				priority_queue<int,vi,greater<int> >
+#define pq_max             				priority_queue<int>
+#define pq_min             				priority_queue<int,vi,greater<int> >
 #define setbits(x)      				__builtin_popcountll(x)
 #define zrobits(x)      				__builtin_ctzll(x)
 #define mod             				1000000007
@@ -67,71 +67,54 @@ void file(){
     #endif
 }
 
-void ZCO12001(){
-int n;sd(n);
-    int dm=0;
-    int d=0;
-    int ans=0;
-    vi v(n);
-    rep(i , 0 , n)sd(v[i]);
-    rep(i ,0 ,n){
-        if(v[i]==1)
-            d++;
-        else d--;
-        if(d > dm)
-            ans = i+1;
-        dm = max(dm,d);
-    }
-    int c=0;
-    d=0;
-    int max2=0;
-    int pos=0;
-    rep(i ,0 , n){
-        if(v[i]==1)
-            c++;
-        else{
-            d+=2; c--;
-            if(c==0){
-                if(d > max2){
-                    max2 = d;
-                    pos = i-d+2;
-                }
-                d=0;
-            }
+void SAVKONO(){
+    w(t){
+        multiset<int>ms;
+        int n,z; sd2(n,z);
+        rep(i , 0 , n){
+            int x; sd(x);
+            ms.insert(x);
         }
-    }
-    tr4(dm,ans,max2,pos);
+        int f=0;
+        int ans=0;
+        while(z > 0 && !ms.empty()){
+        auto itr = ms.end();
+        int x = *--ms.end();
+        if(x==0){
+            cout << "Evacuate" << endl;
+            break;
+        }
+        z-=x;
+        ans++;
+        if(z<=0){
+            cout << ans << endl;
+            break;
+        }
+        ms.erase(std::prev(ms.end()));
+        ms.insert(floor(x/2));
+        }
+    }    
 }
 
-
-int dp[100][100];
-int ks(int wt[], int val[],int w, int i) 
-{ 
-    if (i < 0) 
-        return 0; 
-    if (dp[i][w] != -1) 
-        return dp[i][w]; 
-  
-    if (wt[i] > w) {   
-        dp[i][w] = ks( wt, val, w, i - 1); 
-        return dp[i][w]; 
-    } 
-    else { 
-        dp[i][w] = max(val[i] + ks(wt, val,w - wt[i], i - 1), 
-                       ks( wt, val, w , i - 1));   
-        return dp[i][w]; 
-    } 
-} 
-// int32_t main(){
-//     __;
-//     // mem(dp,-1,sizeof(dp));    
-//     // int val[] = {10,20,30}; 
-//     // int wt[] = {1,1,1}; 
-//     // int w = 2; 
-//     // int n = 3;
-//     // cout << ks(wt,val,w,n);
-//      return 0;
-// }
+void CHFQUE(){
+    int n,k; sd2(n,k);
+    int a[n];
+    rep(i ,0 , n){
+        sd(a[i]);
+    }	
+    int ans=1;
+    stack<int>s;
+     rep(i ,0 , n){
+        while(!s.empty() && a[s.top()] > a[i]){
+            ans = ans * (i-s.top() + 1)%mod;
+            ans = ans%mod;
+            s.pop();
+        }
+        s.push(i);
+    }
+    tr(ans);
+    
+}
 
 int32_t main(){
     __;

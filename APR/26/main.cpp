@@ -67,74 +67,47 @@ void file(){
     #endif
 }
 
-void ZCO12001(){
-int n;sd(n);
-    int dm=0;
-    int d=0;
+void CF_321_D2_A(){
+    int n; sd(n);
+    int a[n];
+    rep(i , 0 , n)sd(a[i]);
+    int c=1;
     int ans=0;
-    vi v(n);
-    rep(i , 0 , n)sd(v[i]);
-    rep(i ,0 ,n){
-        if(v[i]==1)
-            d++;
-        else d--;
-        if(d > dm)
-            ans = i+1;
-        dm = max(dm,d);
-    }
-    int c=0;
-    d=0;
-    int max2=0;
-    int pos=0;
-    rep(i ,0 , n){
-        if(v[i]==1)
+
+    rep(i  , 1 , n){
+        if(a[i] >= a[i-1]){
             c++;
+        }
         else{
-            d+=2; c--;
-            if(c==0){
-                if(d > max2){
-                    max2 = d;
-                    pos = i-d+2;
-                }
-                d=0;
-            }
+            ans = max(ans,c);
+            c=1;
         }
     }
-    tr4(dm,ans,max2,pos);
+    ans = max(ans , c);
+    tr(ans);
 }
 
 
-int dp[100][100];
-int ks(int wt[], int val[],int w, int i) 
-{ 
-    if (i < 0) 
-        return 0; 
-    if (dp[i][w] != -1) 
-        return dp[i][w]; 
-  
-    if (wt[i] > w) {   
-        dp[i][w] = ks( wt, val, w, i - 1); 
-        return dp[i][w]; 
-    } 
-    else { 
-        dp[i][w] = max(val[i] + ks(wt, val,w - wt[i], i - 1), 
-                       ks( wt, val, w , i - 1));   
-        return dp[i][w]; 
-    } 
-} 
-// int32_t main(){
-//     __;
-//     // mem(dp,-1,sizeof(dp));    
-//     // int val[] = {10,20,30}; 
-//     // int wt[] = {1,1,1}; 
-//     // int w = 2; 
-//     // int n = 3;
-//     // cout << ks(wt,val,w,n);
-//      return 0;
-// }
+void ABC_163_B(){
+    int a[n];
+    int d,n; sd2(d,n);
+    int s=0;
+    rep(i ,0, n){
+        sd(a[i]);
+        s+=a[i];
+    }
+    if(d < s){
+        tr(-1);
+    }
+    else tr(d-s);
+}
+
+int n;
+int a[100001];
 
 int32_t main(){
-    __;
-    
-    return 0;
+    __;	
+    sd(n);
+    rep(i  , 0, n)
+    sd(a[i]);
 }
