@@ -67,49 +67,72 @@ void file(){
     #endif
 }
 
-void atcoder_dp_D(){
-    int n,w; sd2(n,w);
-    int wt[n];
-    int val[n];
-    FOR(i ,0 , n) sd2(wt[i] , val[i]);
-    int dp[n+1][w+1];
-
-    for(int i=0 ; i<=n ; i++) dp[i][0]=0;
-    for(int i=0 ; i<=w ; i++) dp[0][i]=0;
-
-    for(int i=1 ; i<=n ; i++){
-        for(int j=1 ; j<= w ; j++){
-            if(wt[i-1] <= j){
-                dp[i][j] = max(val[i-1] + dp[i-1][j-wt[i-1]] , dp[i-1][j]);
-            }
-            else{
-                dp[i][j] = dp[i-1][j];
-            }
+void CORUS(){
+w(t){
+        int n,q; sd2(n,q);
+        string s; cin >> s;
+        vi v(26,0);
+        FOR(i ,0 ,n){
+            v[s[i]-'a']++;
         }
+        while(q--){
+            int x; sd(x);
+            int ans=0;
+            FOR(i ,0 ,26){
+                if(v[i] > x){
+                    ans += (v[i]-x);
+                }
+            }
+            tr(ans);
+        }
+
     }
-    tr(dp[n][w]);
+}
+
+int left(int a[] ,int i , int n){
+    if(i==0)
+        return 0;
+    int s=0;
+    for(int j=i-1 ; j>=0; j--){
+        if(abs(a[j+1]-a[j]) <= 2)
+            s++;
+        else break;
+    }
+    return s;
+}
+
+
+int right(int a[] ,int i , int n){
+    if(i==n-1)
+        return 0;
+    int s=0;
+    for(int j=i+1 ; j<n; j++){
+        if(abs(a[j-1]-a[j]) <= 2)
+            s++;
+        else break;
+    }
+    return s;
+}
+
+void COVID19(){
+     w(t){
+        int ans1=numeric_limits<int>::max();
+        int ans2=numeric_limits<int>::min();
+        int n; sd(n);
+        int a[n]; FOR(i ,0 ,n)sd(a[i]);
+        
+        for(int i=0; i<n ; i++){
+            int tot=1;
+            tot += (right(a,i,n) + left(a,i,n));
+            ans1 = min(ans1 , tot);
+            ans2 = max(ans2 , tot);
+        }
+        tr2(ans1,ans2);
+    }
 }
 
 int32_t main(){
     __;
-    int n,x; sd2(n,x);
-    int a[n];
-    FOR(i ,0 , n) sd(a[i]);
-    int dp[n+1][x+1];
-
-    for(int i=0 ; i<=n ; i++) dp[i][0]=1;
-    for(int i=1 ; i<=x ; i++) dp[0][i]=0;
-
-    for(int i=1 ; i<=n ; i++){
-        for(int j=1 ; j<= x ; j++){
-            if(a[i-1] <= j){
-                dp[i][j] =  dp[i-1][j-a[i-1]] + dp[i-1][j];
-            }
-            else{
-                dp[i][j] = dp[i-1][j];
-            }
-        }
-    }
-    tr(dp[n][x]);
+    
     return 0;
 }

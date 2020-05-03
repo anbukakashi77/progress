@@ -92,24 +92,46 @@ void atcoder_dp_D(){
 
 int32_t main(){
     __;
-    int n,x; sd2(n,x);
-    int a[n];
-    FOR(i ,0 , n) sd(a[i]);
-    int dp[n+1][x+1];
+    w(t){
+        int n; sd(n);
+        int a[n];
+        FOR(i ,0 ,n) sd(a[i]);
+        int ans1=numeric_limits<int>::max();
+        int c=1;
+        int ans2=0;
+        int g=0;
 
-    for(int i=0 ; i<=n ; i++) dp[i][0]=1;
-    for(int i=1 ; i<=x ; i++) dp[0][i]=0;
-
-    for(int i=1 ; i<=n ; i++){
-        for(int j=1 ; j<= x ; j++){
-            if(a[i-1] <= j){
-                dp[i][j] =  dp[i-1][j-a[i-1]] + dp[i-1][j];
+        for(int i=0 ; i<n-1 ;i++){
+            if(a[i+1]-a[i] <=2){
+                c++; ans2 = max(ans2,c);
             }
             else{
-                dp[i][j] = dp[i-1][j];
+                ans2 = max(ans2,c);
+                c=1;   
             }
         }
+        ans2 = max(ans2,c);
+        c=1;
+
+        pqs pq;
+    for(int i=0 ; i<n-1 ; i++){
+        if(a[i+1]-a[i] <= 2){
+            c++;
+             g = max(g,c);
+        }   
+        else{
+            g = max(g,c);
+            pq.push(g);
+            c=1;
+        }
+        // cout << g << " ";
+        // pq.push(g);
     }
-    tr(dp[n][x]);
+    g = max(g,c);
+    pq.push(g);
+    // cout << pq.top() << endl;
+        
+        tr2(pq.top(),ans2);
+    }
     return 0;
 }

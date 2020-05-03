@@ -67,49 +67,88 @@ void file(){
     #endif
 }
 
-void atcoder_dp_D(){
-    int n,w; sd2(n,w);
-    int wt[n];
-    int val[n];
-    FOR(i ,0 , n) sd2(wt[i] , val[i]);
-    int dp[n+1][w+1];
+void min_subsetsum_diff(){
+int a[] = {1,6,11,5};
+    int n = sizeof(a)/sizeof(a[0]);
+    int range=0;
 
-    for(int i=0 ; i<=n ; i++) dp[i][0]=0;
-    for(int i=0 ; i<=w ; i++) dp[0][i]=0;
+    FOR(i ,0, n)range+=a[i];
+    int dp[n+1][range+1];
 
+    for(int i=0 ; i<= range ; i++)
+        dp[0][i]=0;
+    for(int i=0 ; i<=n ; i++)
+        dp[i][0]=1;
+    
     for(int i=1 ; i<=n ; i++){
-        for(int j=1 ; j<= w ; j++){
-            if(wt[i-1] <= j){
-                dp[i][j] = max(val[i-1] + dp[i-1][j-wt[i-1]] , dp[i-1][j]);
-            }
+        for(int j=1 ; j<=range ; j++){
+            if(a[i-1] <= j){
+                dp[i][j] = dp[i-1][j-a[i-1]] || dp[i-1][j];
+            }   
             else{
                 dp[i][j] = dp[i-1][j];
             }
         }
     }
-    tr(dp[n][w]);
+    vi v;                       //push the true values into a vector
+                                // find MIN(| 2v[i]-range |) --> ans
+    for(int i=0 ; i<= range ; i++){
+        if(dp[n][i]==1)
+            v.pb(i);
+    }
+    int min_diff = numeric_limits<int>::max();
+    for(int i=0 ; i<v.size() ; i++){
+        min_diff = min(min_diff , abs(2*v[i]-range));
+    }
+    tr(min_diff);
+}
+
+void CF_ED15_A(){
+int n; sd(n);
+    int a[n]; FOR(i , 0 , n)sd(a[i]);
+    int ans=0;
+    int c=1;
+    FOR(i ,0, n-1){
+        if(a[i+1] > a[i]){
+            c++;
+            ans = max(ans , c);
+        }   
+        else{
+            ans = max(ans ,c);
+            c=1;
+        }
+        ans = max(ans ,c);
+    }
+    tr(max(ans,c));
+}
+
+void subsetwithgivendiff(){
+        int a[] = {1,1,2,3};
+    int n=sizeof(a)/sizeof(a[0]);
+    int diff = 1;
+    int sum=0;
+    FOR(i,0,n)sum+=a[i];
+    int tsum = (sum+diff)/2;
+    int dp[n+1][tsum+1];
+    
+    FOR(i ,0 ,tsum+1)dp[0][i]=0;
+    FOR(i ,0 ,n+1)dp[i][0] = 1;
+
+    FOR(i ,1  ,n+1){
+        FOR(j , 1, tsum+1){
+            if(a[i-1] <= j){
+                dp[i][j] = dp[i-1][j-a[i-1]] + dp[i-1][j];
+            }   
+            else{
+                dp[i][j] = dp[i-1][j];
+            }
+        }
+    }
+
+    cout << dp[n][tsum] << endl;
 }
 
 int32_t main(){
     __;
-    int n,x; sd2(n,x);
-    int a[n];
-    FOR(i ,0 , n) sd(a[i]);
-    int dp[n+1][x+1];
-
-    for(int i=0 ; i<=n ; i++) dp[i][0]=1;
-    for(int i=1 ; i<=x ; i++) dp[0][i]=0;
-
-    for(int i=1 ; i<=n ; i++){
-        for(int j=1 ; j<= x ; j++){
-            if(a[i-1] <= j){
-                dp[i][j] =  dp[i-1][j-a[i-1]] + dp[i-1][j];
-            }
-            else{
-                dp[i][j] = dp[i-1][j];
-            }
-        }
-    }
-    tr(dp[n][x]);
     return 0;
 }
