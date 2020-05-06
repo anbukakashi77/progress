@@ -67,8 +67,95 @@ void file(){
     #endif
 }
 
+void B1_ladder(){
+       int n,t; sd2(n,t);
+    string s; cin >> s;
+    while(t--){
+        for(int i=0 ; i<n-1 ; ){
+            if(s[i+1]=='G' && s[i]=='B'){
+                s[i+1]='B'; s[i]='G';
+                i+=2;
+            }
+            else i++;
+        }
+    }
+    cout << s << endl;
+}
+
+void CF_197_D2(){
+    int n,m; sd2(n,m);
+    int a[m];
+    FOR(i , 0 ,m)sd(a[i]);
+    int ans=0;
+    ans+=(a[0]-1);
+    
+    FOR(i ,0 ,m-1){
+        if(a[i+1] >= a[i]){
+            ans+=(a[i+1]-a[i]);
+        }
+        else{
+            ans+=(n-a[i]+a[i+1]);
+        }
+    }
+    tr(ans);
+}
+
+void CF280_D2(){
+int n,l;
+    sd2(n,l);
+    double a[n];
+    FOR(i ,0 ,n)sd(a[i]);
+    sort(a,a+n);
+    double ans=0;
+    double t=0;
+    if(a[0]!=0){
+        t = (a[0]);
+        if(t > ans)
+            ans = t;
+    }
+    if(a[n-1]!=l){
+        t = (l-a[n-1]);
+        if(t > ans )
+            ans = t;
+    }
+    FOR(i ,0 ,n-1){
+        t = (a[i+1]-a[i])/2;
+        if(t > ans ){
+            ans = t;
+        }
+    }
+    printf("%.9lf\n" , ans);
+}
+
+void CF284_D2_B(){
+    int n,m; sd2(n,m);
+    map<string , string > ma;
+    FOR(i ,0, m){
+        string s1,s2; cin >> s1 >> s2;
+        if(s1.length() <= s2.length())
+            ma[s1] = s1;
+        else ma[s1]=s2;
+    }
+    FOR(i ,0,n){
+        string s; cin >> s;
+        cout << ma[s] << " ";
+    }
+}
+
 int32_t main(){
     __;	
-    
+    int n; sd(n);
+    int a[n];
+    FOR(i ,0 , n)sd(a[i]);
+    FOR(i ,0, n){
+        int c=2;
+        for(int j=2 ; j<a[i] ; j++){
+            if(!(a[i]%j))
+                c++;
+        }
+        if(c==3)
+            cout << "YES" << endl;
+        else cout << "NO" << endl;
+    }
     return 0;
 }
