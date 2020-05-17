@@ -58,6 +58,7 @@ int mypow(int a, int b){	//(logn) --> faster than recursive --> binary expo
         a = a * a;
         b >>= 1;
     }
+    return res;
 }
 
 void file(){
@@ -150,5 +151,11 @@ void subsetwithgivendiff(){
 
 int32_t main(){
     __;
+    set<int>s;
+    s.insert(1);
+    s.insert(2);
+    for(auto itr : s){
+        cout << itr << " ";
+    }
     return 0;
 }
