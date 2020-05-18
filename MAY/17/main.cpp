@@ -166,8 +166,6 @@ int n; sd(n);
     tr(ans);
 }
 
-const int N = 1e5+5;
-int dp[N];
 
 int f(int n ,int x , int y){
     if(n==1) return x;
@@ -189,9 +187,83 @@ void CF257_D2_B(){
     else cout << ((x-y)%mod+mod)%mod << endl;
 }
 
+const int N = 1e5+5;
+vi g[N];
+int vis[N];
+int subtree[N][26];
+char val[N];
+int term[N];
+int deg[N];
+queue<int>q;
+
+void dfs(int node){
+    vis[node]=1;
+    for(auto child : g[node]){
+        if(!vis[child]){
+            dfs(child);
+            for(int i=0 ; i<26 ; i++){
+                subtree[node][i]+=subtree[child][i];
+            }
+        }
+    }
+    subtree[node][val[node]-'a']++;
+}
+
+void words_n_trees(){
+    int n,q; sd2(n,q);
+    for(int i=1 ; i<=n ; i++){
+        cin >> val[i];
+    }
+    rep(i,0,n-1){
+        int u,v; sd2(u,v);
+        g[v].pb(u);
+        g[u].pb(v);
+    }
+    dfs(1);
+    while(q--){
+        int ans=0;
+        int node; sd(node);
+        string s; cin >> s;
+        int f[26]; fill(f , f+26 , 0);
+        rep(i, 0, s.length()){
+            f[s[i]-'a']++;
+        }
+        rep(i ,0 , 26){
+            if(f[i] < subtree[node][i]) ans+=0;
+            else ans+=f[i]-subtree[node][i];
+        }
+        cout << ans << endl;
+    }
+}
+
 int32_t main(){
     __;
     file();
-    
-    return 0; 
+    int n,k; sd2(n,k);
+    rep(i,0,n-1){
+        int u,v; sd2(u,v);
+        g[u].pb(v); g[v].pb(u);
+        deg[u]++; deg[v]++;
+    }
+    fill(term,term+n,0);
+    rep(i, 0, k){
+        int x; sd(x);
+        term[x]=1;
+    }
+
+    rep(i , 1, n+1){
+        if(deg[i]==1 && term[i]==0) q.push(i);
+    }
+    int res=0;
+
+    while(!q.empty()){
+        int curr = q.front(); q.pop();
+        res++;
+        for(auto child : g[curr]){
+            deg[child]--;
+            if(deg[child]==1 && term[child]==0)q.push(child);
+        }
+    }
+    cout << n-res << endl;
+    return 0;
 }
