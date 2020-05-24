@@ -58,9 +58,68 @@ void file(){
     #endif
 }
 
+const int N = 1e5+5;
+vector<pii>g[N];
+int vis[N];
+int dis[N];
+
+int dijkstras(int source , int n){
+    priority_queue<pii , vector<pii> ,greater<pii>>pq;
+    pq.push({0 , source});
+    dis[source]=0;
+    while(!pq.empty()){
+        int u = pq.top().ss;
+        pq.pop();
+        if(!vis[u]) vis[u]=1;
+
+        for(auto child : g[u]){
+            int v = child.ff;
+            int w = child.ss;
+
+            if(w + dis[u] < dis[v]){
+                dis[v] = dis[u]+w;
+                pq.push({dis[v],v});
+            }
+        }
+    }
+    int mx=0;
+    int id;
+    for(int i=1 ; i<=n ; i++){
+    //    cout << dis[i] << " ";
+        if(mx < dis[i]){
+            mx = dis[i];
+            id = i;
+        }
+    }
+    return id;
+}
+
+void benefact(){
+    w(t){
+        int n; sd(n);
+        rep(i , 0 , n+1)g[i].clear();
+        fill(dis , dis+n+4 , inf); fill(vis , vis+n+5 , 0);
+        rep(i ,0, n-1){
+        int u,v,w; sd3(u , v ,w);
+        g[u].pb({v,w});
+        g[v].pb({u , w});
+        }
+        int y = dijkstras(1,n);
+        fill(vis,vis+n+5,0);
+        fill(dis , dis+n+5 , inf);
+        int id = dijkstras(y,n);
+        int ans = dis[id];
+        tr(ans);
+    }
+}
+
 int32_t main(){
     __;
-    //file();
+    file();
     return 0;
 }
+
+
+
+
 
